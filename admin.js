@@ -56,6 +56,11 @@ const elements = {
   dismissNotice: document.querySelector("#dismissNotice"),
   notice: document.querySelector(".local-notice"),
   storageNotice: document.querySelector("#storageNotice"),
+  accountPasswordForm: document.querySelector("#accountPasswordForm"),
+  accountNewPassword: document.querySelector("#accountNewPassword"),
+  accountNewPasswordConfirm: document.querySelector("#accountNewPasswordConfirm"),
+  accountPasswordButton: document.querySelector("#accountPasswordButton"),
+  accountPasswordMessage: document.querySelector("#accountPasswordMessage"),
   toast: document.querySelector("#adminToast"),
 };
 
@@ -567,6 +572,37 @@ elements.passwordResetForm.addEventListener("submit", async (event) => {
   } finally {
     elements.updatePasswordButton.disabled = false;
     elements.updatePasswordButton.textContent = "更新密码";
+  }
+});
+
+elements.accountPasswordForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!elements.accountPasswordForm.reportValidity()) return;
+  const password = elements.accountNewPassword.value;
+  const confirmPassword = elements.accountNewPasswordConfirm.value;
+  elements.accountPasswordMessage.textContent = "";
+
+  if (password !== confirmPassword) {
+    elements.accountPasswordMessage.textContent = "两次输入的新密码不一致";
+    elements.accountNewPasswordConfirm.focus();
+    return;
+  }
+
+  elements.accountPasswordButton.disabled = true;
+  elements.accountPasswordButton.textContent = "正在修改…";
+  try {
+    await window.NovaCatalog.updatePassword(password);
+    elements.accountNewPassword.value = "";
+    elements.accountNewPasswordConfirm.value = "";
+    await window.NovaCatalog.signOut();
+    products = [];
+    render();
+    showLogin("密码已修改，请用新密码重新登录后台");
+  } catch (error) {
+    elements.accountPasswordMessage.textContent = error.message || "密码修改失败，请稍后重试";
+  } finally {
+    elements.accountPasswordButton.disabled = false;
+    elements.accountPasswordButton.textContent = "修改登录密码";
   }
 });
 

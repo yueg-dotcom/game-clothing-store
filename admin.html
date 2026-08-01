@@ -86,6 +86,26 @@
         <button id="dismissNotice" type="button" aria-label="关闭提示">×</button>
       </aside>
 
+      <section class="account-panel">
+        <div>
+          <span>ACCOUNT SAFETY</span>
+          <h2>账号安全</h2>
+          <p>登录后台后可以直接修改管理员密码，不用再依赖邮件重置链接。</p>
+        </div>
+        <form id="accountPasswordForm" class="security-form">
+          <label>
+            <span>新密码</span>
+            <input id="accountNewPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="至少 8 位" />
+          </label>
+          <label>
+            <span>确认新密码</span>
+            <input id="accountNewPasswordConfirm" type="password" autocomplete="new-password" minlength="8" required placeholder="再输入一次" />
+          </label>
+          <button id="accountPasswordButton" type="submit">修改登录密码</button>
+          <small id="accountPasswordMessage" role="alert"></small>
+        </form>
+      </section>
+
       <section class="stats-grid" aria-label="商品统计">
         <article>
           <span>商品总数</span>

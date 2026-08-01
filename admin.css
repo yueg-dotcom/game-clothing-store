@@ -144,6 +144,30 @@ svg { display: block; }
 .local-notice p strong { color: #4935a0; }
 .local-notice button { width: 28px; height: 28px; color: #716a83; background: transparent; font-size: 18px; cursor: pointer; }
 
+.account-panel {
+  margin-top: 18px;
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(360px, 1.6fr);
+  gap: 18px;
+  align-items: end;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: white;
+}
+.account-panel > div > span { color: var(--purple); font-size: 8px; font-weight: 850; letter-spacing: .18em; }
+.account-panel h2 { margin: 6px 0 0; font-size: 17px; }
+.account-panel p { margin: 8px 0 0; color: var(--muted); font-size: 10px; line-height: 1.65; }
+.security-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 9px; align-items: end; }
+.security-form label { display: grid; gap: 7px; }
+.security-form span { color: #5e6066; font-size: 9px; font-weight: 700; }
+.security-form input { height: 38px; padding: 0 11px; border: 1px solid var(--line); border-radius: 7px; outline: none; background: #fafaf8; font-size: 10px; }
+.security-form input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(108,76,241,.1); }
+.security-form button { height: 38px; padding: 0 13px; border-radius: 7px; color: white; background: var(--ink); font-size: 9px; font-weight: 800; cursor: pointer; }
+.security-form button:hover { background: var(--purple); }
+.security-form button:disabled { opacity: .55; cursor: wait; }
+.security-form small { grid-column: 1 / -1; min-height: 14px; color: var(--red); font-size: 9px; line-height: 1.5; }
+
 .stats-grid { margin-top: 25px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 .stats-grid article { min-height: 135px; padding: 22px; display: grid; grid-template-columns: 1fr auto; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.35); }
 .stats-grid article > span { color: var(--muted); font-size: 10px; }
@@ -263,6 +287,8 @@ tbody tr.is-offline { opacity: .58; }
 
 @media (max-width: 900px) {
   .admin-main { width: calc(100% - 32px); padding-top: 46px; }
+  .account-panel { grid-template-columns: 1fr; }
+  .security-form { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: repeat(2,1fr); }
   .panel-heading { align-items: flex-start; flex-direction: column; }
   .data-actions { width: 100%; overflow-x: auto; }

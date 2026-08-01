@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f4f1" />
+    <meta name="description" content="NOVA LOOK 本地商品管理工具" />
+    <title>商品管理 · NOVA LOOK</title>
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+  <body>
+    <header class="admin-header" id="adminHeader">
+      <a class="brand" href="./index.html">
+        <span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>NOVA <b>LOOK</b></span>
+      </a>
+      <div class="header-title">
+        <i></i>
+        <span>商品管理</span>
+      </div>
+      <div class="header-actions">
+        <button class="logout-button" id="logoutButton" type="button" hidden>退出管理</button>
+        <a class="store-link" href="./index.html">
+          查看商城
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 6 6-6 6"></path></svg>
+        </a>
+      </div>
+    </header>
+
+    <section class="auth-gate" id="authGate" hidden>
+      <article class="login-card">
+        <span>PRIVATE CATALOG</span>
+        <h1>登录商品后台</h1>
+        <p>商品修改仅对管理员开放。登录后可新增、改价、调整库存和上下架。</p>
+        <form id="loginForm">
+          <label>
+            <span>管理员邮箱</span>
+            <input id="loginEmail" type="email" autocomplete="username" required placeholder="你的邮箱" />
+          </label>
+          <label>
+            <span>密码</span>
+            <input id="loginPassword" type="password" autocomplete="current-password" required placeholder="输入密码" />
+          </label>
+          <button id="loginButton" type="submit">登录后台</button>
+          <small id="loginError" role="alert"></small>
+        </form>
+        <a href="./index.html">← 返回商品首页</a>
+      </article>
+    </section>
+
+    <main class="admin-main" id="adminMain" hidden>
+      <section class="page-intro">
+        <div>
+          <span>CATALOG MANAGER</span>
+          <h1>管理你的游戏衣橱</h1>
+          <p>新增商品、修改价格与库存，或者一键上下架。保存后商城页面即可读取最新数据。</p>
+        </div>
+        <button class="primary-action" id="addProduct" type="button">
+          <span>＋</span>
+          新增商品
+        </button>
+      </section>
+
+      <aside class="local-notice">
+        <div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v5M12 17h.01"></path><circle cx="12" cy="12" r="9"></circle></svg>
+          <p id="storageNotice"><strong>本地预览模式：</strong>云端尚未配置，数据暂时保存在当前浏览器。</p>
+        </div>
+        <button id="dismissNotice" type="button" aria-label="关闭提示">×</button>
+      </aside>
+
+      <section class="stats-grid" aria-label="商品统计">
+        <article>
+          <span>商品总数</span>
+          <strong id="totalStat">0</strong>
+          <small>ALL PRODUCTS</small>
+        </article>
+        <article>
+          <span>已上架</span>
+          <strong id="onlineStat">0</strong>
+          <small>ONLINE</small>
+        </article>
+        <article>
+          <span>已下架</span>
+          <strong id="offlineStat">0</strong>
+          <small>OFFLINE</small>
+        </article>
+        <article>
+          <span>低库存</span>
+          <strong id="lowStockStat">0</strong>
+          <small>STOCK ≤ 10</small>
+        </article>
+      </section>
+
+      <section class="catalog-panel">
+        <div class="panel-heading">
+          <div>
+            <span>PRODUCT LIST</span>
+            <h2>全部商品</h2>
+          </div>
+          <div class="data-actions">
+            <button id="migrateData" type="button" hidden>迁移本机数据</button>
+            <button id="exportData" type="button">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10M6 9l4 4 4-4M3 16h14"></path></svg>
+              导出备份
+            </button>
+            <label>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 14V4M6 8l4-4 4 4M3 17h14"></path></svg>
+              导入备份
+              <input id="importData" type="file" accept=".json,application/json" hidden />
+            </label>
+            <button class="danger-subtle" id="resetData" type="button">恢复示例</button>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <label class="search-control">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.3 4.3"></path></svg>
+            <input id="adminSearch" type="search" placeholder="搜索商品名称" />
+          </label>
+          <label class="select-control">
+            <span>分类</span>
+            <select id="categoryFilter">
+              <option value="全部">全部分类</option>
+              <option value="发型">发型</option>
+              <option value="服装">服装</option>
+              <option value="套装">套装</option>
+              <option value="饰品">饰品</option>
+              <option value="眼瞳">眼瞳</option>
+            </select>
+          </label>
+          <label class="select-control">
+            <span>状态</span>
+            <select id="statusFilter">
+              <option value="全部">全部状态</option>
+              <option value="online">已上架</option>
+              <option value="offline">已下架</option>
+              <option value="low">低库存</option>
+            </select>
+          </label>
+          <p id="filterResult">显示 0 件商品</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>商品</th>
+                <th>分类</th>
+                <th>适用性别</th>
+                <th>价格</th>
+                <th>库存</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="productRows"></tbody>
+          </table>
+          <div class="empty-list" id="emptyList" hidden>
+            <span>⌁</span>
+            <strong>没有符合条件的商品</strong>
+            <p>换个筛选条件，或新增一件商品。</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="editor" id="editor" aria-hidden="true">
+      <div class="editor-mask" id="editorMask"></div>
+      <aside class="editor-panel" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+        <div class="editor-header">
+          <div><span>PRODUCT EDITOR</span><h2 id="editorTitle">新增商品</h2></div>
+          <button id="closeEditor" type="button" aria-label="关闭编辑器">×</button>
+        </div>
+
+        <form id="productForm">
+          <input id="editingId" type="hidden" />
+
+          <section class="form-section image-section">
+            <div class="field-heading"><span>商品图片</span><small>建议使用正方形或透明背景图片</small></div>
+            <div class="image-editor">
+              <div class="image-preview" id="imagePreview"><span>暂无图片</span></div>
+              <div class="image-actions">
+                <label class="upload-button">
+                  上传图片
+                  <input id="imageUpload" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+                </label>
+                <button id="clearImage" type="button">清除图片</button>
+                <small>图片会自动压缩；云端模式下将上传到统一图片空间。</small>
+              </div>
+            </div>
+            <label class="field full-field">
+              <span>或填写图片地址</span>
+              <input id="imageUrl" type="text" placeholder="例如 ./images/product-01.png" />
+            </label>
+          </section>
+
+          <section class="form-section form-grid">
+            <label class="field full-field">
+              <span>商品名称 <b>*</b></span>
+              <input id="productName" type="text" maxlength="60" required placeholder="输入商品名称" />
+            </label>
+            <label class="field">
+              <span>商品分类 <b>*</b></span>
+              <select id="productCategory" required>
+                <option value="发型">发型</option>
+                <option value="服装">服装</option>
+                <option value="套装">套装</option>
+                <option value="饰品">饰品</option>
+                <option value="眼瞳">眼瞳</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>适用性别 <b>*</b></span>
+              <select id="productGender" required>
+                <option value="通用">男女通用</option>
+                <option value="女性">女性适用</option>
+                <option value="男性">男性适用</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>售价 <b>*</b></span>
+              <div class="input-prefix"><i>¥</i><input id="productPrice" type="number" min="0" step="0.01" required /></div>
+            </label>
+            <label class="field">
+              <span>划线价</span>
+              <div class="input-prefix"><i>¥</i><input id="originalPrice" type="number" min="0" step="0.01" /></div>
+            </label>
+            <label class="field">
+              <span>库存 <b>*</b></span>
+              <input id="productStock" type="number" min="0" step="1" required />
+            </label>
+            <label class="field">
+              <span>商品角标</span>
+              <input id="productBadge" type="text" maxlength="12" placeholder="如 NEW、HOT、限定" />
+            </label>
+            <label class="field full-field">
+              <span>商品简介</span>
+              <textarea id="productDescription" rows="3" maxlength="100" placeholder="简短描述材质、特效或套装内容"></textarea>
+            </label>
+            <label class="field">
+              <span>展示底色</span>
+              <div class="color-control"><input id="productColor" type="color" value="#eee9ff" /><input id="colorText" type="text" value="#eee9ff" maxlength="7" /></div>
+            </label>
+            <label class="field">
+              <span>上架状态</span>
+              <select id="productStatus">
+                <option value="online">立即上架</option>
+                <option value="offline">暂不展示</option>
+              </select>
+            </label>
+          </section>
+
+          <div class="form-footer">
+            <button class="delete-product" id="deleteProduct" type="button" hidden>删除商品</button>
+            <div>
+              <button class="cancel-button" id="cancelEditor" type="button">取消</button>
+              <button class="save-button" type="submit">保存商品</button>
+            </div>
+          </div>
+        </form>
+      </aside>
+    </div>
+
+    <div class="toast" id="adminToast" role="status"><i>✓</i><p>已保存</p></div>
+
+    <script src="./config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./catalog.js"></script>
+    <script src="./admin.js"></script>
+  </body>
+</html>

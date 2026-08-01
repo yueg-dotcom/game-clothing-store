@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="NOVA LOOK 游戏穿搭商店——发现发型、服装、饰品与眼瞳，清晰标注男女穿戴适配。"
+    />
+    <meta name="theme-color" content="#111318" />
+    <title>NOVA LOOK · 游戏穿搭商店</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="announcement">
+      <p>新用户首单 9 折</p>
+      <span aria-hidden="true"></span>
+      <p>库存实时同步</p>
+      <span aria-hidden="true"></span>
+      <p>穿戴性别清晰标注</p>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="NOVA LOOK 首页">
+        <span class="brand-symbol" aria-hidden="true">
+          <i></i><i></i><i></i><i></i>
+        </span>
+        <span>NOVA <b>LOOK</b></span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="主导航">
+        <a class="is-active" href="#home">首页</a>
+        <a href="#categories">衣橱分类</a>
+        <a href="#products">新品穿搭</a>
+        <a href="#service">服务保障</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="round-button search-jump" type="button" aria-label="搜索商品">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.8" cy="10.8" r="6.8"></circle>
+            <path d="m16 16 4.3 4.3"></path>
+          </svg>
+        </button>
+        <button class="cart-button" id="cartButton" type="button" aria-label="打开购物车">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 4h2l2.1 10.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L20 8H7"></path>
+            <circle cx="9.5" cy="20" r="1"></circle>
+            <circle cx="17.5" cy="20" r="1"></circle>
+          </svg>
+          <span>购物车</span>
+          <b id="cartCount">0</b>
+        </button>
+        <button class="menu-button" id="menuButton" type="button" aria-label="打开菜单" aria-expanded="false">
+          <i></i><i></i>
+        </button>
+      </div>
+    </header>
+
+    <nav class="mobile-nav" id="mobileNav" aria-label="移动端导航">
+      <a href="#home">首页</a>
+      <a href="#categories">衣橱分类</a>
+      <a href="#products">新品穿搭</a>
+      <a href="#service">服务保障</a>
+    </nav>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span> SEASON 08 · 全新衣橱已上线</div>
+          <h1>在游戏世界里<br /><em>穿成你自己</em></h1>
+          <p>
+            从发型、服装到饰品与眼瞳，用一套完整穿搭，创造只属于你的游戏角色。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#products">
+              立即选购
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 6 6-6 6"></path></svg>
+            </a>
+            <a class="secondary-button" href="#categories">浏览分类</a>
+          </div>
+          <div class="hero-proof">
+            <div>
+              <strong>10min</strong>
+              <span>快速发放</span>
+            </div>
+            <i></i>
+            <div>
+              <strong>100%</strong>
+              <span>适配标注</span>
+            </div>
+            <i></i>
+            <div>
+              <strong>4.9</strong>
+              <span>玩家评分</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-label="NOVA LOOK 游戏角色穿搭">
+          <div class="art-grid" aria-hidden="true"></div>
+          <span class="floating-tag tag-one">UNISEX STYLE</span>
+          <span class="floating-tag tag-two">4 PIECE LOOK</span>
+          <span class="spark spark-one" aria-hidden="true">✦</span>
+          <span class="spark spark-two" aria-hidden="true">✦</span>
+          <svg class="hero-avatar" viewBox="0 0 680 500" role="img" aria-label="紫色潮流游戏角色穿搭插画">
+            <defs>
+              <linearGradient id="heroHair" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#a88cff" />
+                <stop offset=".55" stop-color="#7251e8" />
+                <stop offset="1" stop-color="#422990" />
+              </linearGradient>
+              <linearGradient id="heroCoat" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#f5f1ff" />
+                <stop offset="1" stop-color="#cfc3ff" />
+              </linearGradient>
+              <filter id="avatarShadow" x="-30%" y="-30%" width="160%" height="180%">
+                <feDropShadow dx="0" dy="28" stdDeviation="24" flood-color="#110c38" flood-opacity=".36" />
+              </filter>
+            </defs>
+            <ellipse cx="342" cy="452" rx="168" ry="28" fill="#1f163d" opacity=".2" />
+            <g filter="url(#avatarShadow)">
+              <path d="M258 112c0-71 38-100 84-100s84 29 84 100v78H258v-78Z" fill="url(#heroHair)" />
+              <path d="M291 88c0-42 22-65 51-65s51 23 51 65v73c0 41-23 70-51 70s-51-29-51-70V88Z" fill="#f1bca5" />
+              <path d="M270 112c13-71 49-88 79-88 38 0 66 23 74 78-28-10-48-27-62-51-21 30-50 49-91 61Z" fill="url(#heroHair)" />
+              <path d="M279 113c-7 52 7 101 33 126-34-8-55-37-55-79v-48l22 1ZM405 106c12 51 1 101-27 129 34-8 54-39 54-81v-45l-27-3Z" fill="url(#heroHair)" />
+              <path d="M314 134c8-8 18-8 27 0M358 134c8-8 18-8 26 0" fill="none" stroke="#54386a" stroke-linecap="round" stroke-width="5" />
+              <ellipse cx="329" cy="143" rx="8" ry="10" fill="#c7f45b" stroke="#322554" stroke-width="4" />
+              <ellipse cx="372" cy="143" rx="8" ry="10" fill="#c7f45b" stroke="#322554" stroke-width="4" />
+              <path d="M342 172c7 5 14 5 21 0" fill="none" stroke="#bd6f76" stroke-linecap="round" stroke-width="4" />
+              <path d="M307 219h70l17 50-53 29-53-29 19-50Z" fill="#f1bca5" />
+              <path d="M253 258c24-31 58-45 89-45s67 14 91 45l52 185H197l56-185Z" fill="url(#heroCoat)" />
+              <path d="M342 214v229M283 235l59 66 59-66" fill="none" stroke="#7151df" stroke-width="8" />
+              <path d="M216 301 158 407M468 301l58 106" fill="none" stroke="#d7ccff" stroke-linecap="round" stroke-width="34" />
+              <path d="M262 311h160M248 354h188" fill="none" stroke="#b4a3f2" stroke-width="5" opacity=".65" />
+              <path d="m334 286 8-20 8 20-8 20-8-20Z" fill="#c7f45b" stroke="#4a3397" stroke-width="4" />
+              <circle cx="282" cy="146" r="19" fill="none" stroke="#ffd66f" stroke-width="7" />
+              <path d="M282 165v22" stroke="#ffd66f" stroke-width="7" stroke-linecap="round" />
+              <path d="M197 443h288" stroke="#5230bc" stroke-width="13" stroke-linecap="round" />
+            </g>
+          </svg>
+          <div class="hero-product-note">
+            <span>本周主推</span>
+            <strong>星轨漫游者 · 四件套</strong>
+            <b>¥ 188</b>
+          </div>
+        </div>
+      </section>
+
+      <section class="category-section" id="categories">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">SHOP BY CATEGORY</span>
+            <h2>从衣橱分类开始</h2>
+          </div>
+          <p>先选类别，再按适用性别精准筛选。</p>
+        </div>
+
+        <div class="category-grid">
+          <button class="category-card category-hair" type="button" data-category="发型">
+            <span class="category-index">01</span>
+            <div class="category-icon" aria-hidden="true">
+              <svg viewBox="0 0 120 90">
+                <path d="M28 48c0-29 13-43 32-43s32 14 32 43v34H28V48Z"></path>
+                <path d="M38 45c5-18 16-28 28-28 11 0 21 7 27 21-16-2-28-9-36-20-6 14-16 23-29 28"></path>
+                <path d="M36 44v27M84 40v34M49 37c-2 19 1 33 9 44"></path>
+              </svg>
+            </div>
+            <span class="category-name">发型</span>
+            <small>短发 · 长发 · 特效发型</small>
+            <i>24 件商品</i>
+          </button>
+
+          <button class="category-card category-clothes" type="button" data-category="服装">
+            <span class="category-index">02</span>
+            <div class="category-icon" aria-hidden="true">
+              <svg viewBox="0 0 120 90">
+                <path d="m42 11 18 11 18-11 22 17-15 19-9-7v43H44V40l-9 7-15-19 22-17Z"></path>
+                <path d="M42 11c2 13 8 20 18 20s16-7 18-20M60 31v49"></path>
+                <path d="M44 59h32"></path>
+              </svg>
+            </div>
+            <span class="category-name">服装</span>
+            <small>上装 · 下装 · 外套</small>
+            <i>36 件商品</i>
+          </button>
+
+          <button class="category-card category-set" type="button" data-category="套装">
+            <span class="category-index">03</span>
+            <div class="category-icon" aria-hidden="true">
+              <svg viewBox="0 0 120 90">
+                <path d="m35 11 16 10 9 21-20 10-17-24 12-17Z"></path>
+                <path d="m85 11-16 10-9 21 20 10 17-24-12-17Z"></path>
+                <path d="M42 48h36l10 35H32l10-35Z"></path>
+                <path d="M60 43v39M40 63h40"></path>
+              </svg>
+            </div>
+            <span class="category-name">套装</span>
+            <small>多件组合 · 主题套装 · 限定套装</small>
+            <i>16 件商品</i>
+          </button>
+
+          <button class="category-card category-accessory" type="button" data-category="饰品">
+            <span class="category-index">04</span>
+            <div class="category-icon" aria-hidden="true">
+              <svg viewBox="0 0 120 90">
+                <circle cx="60" cy="44" r="26"></circle>
+                <path d="m60 18 7 18 19 8-19 8-7 18-7-18-19-8 19-8 7-18Z"></path>
+                <path d="M28 16 16 7M92 16l12-9M28 72l-12 10M92 72l12 10"></path>
+              </svg>
+            </div>
+            <span class="category-name">饰品</span>
+            <small>耳饰 · 项链 · 面饰</small>
+            <i>31 件商品</i>
+          </button>
+
+          <button class="category-card category-eyes" type="button" data-category="眼瞳">
+            <span class="category-index">05</span>
+            <div class="category-icon" aria-hidden="true">
+              <svg viewBox="0 0 120 90">
+                <path d="M12 45c13-20 29-29 48-29s35 9 48 29C95 65 79 74 60 74S25 65 12 45Z"></path>
+                <circle cx="60" cy="45" r="21"></circle>
+                <circle cx="60" cy="45" r="9"></circle>
+                <path d="m60 24 5 13 14 8-14 8-5 13-5-13-14-8 14-8 5-13Z"></path>
+              </svg>
+            </div>
+            <span class="category-name">眼瞳</span>
+            <small>纯色 · 渐变 · 特效瞳</small>
+            <i>19 件商品</i>
+          </button>
+        </div>
+      </section>
+
+      <section class="products-section" id="products">
+        <div class="section-heading product-heading">
+          <div>
+            <span class="section-kicker">WEEKLY PICKS</span>
+            <h2>本周穿搭精选</h2>
+          </div>
+          <p>每件商品都标明女性、男性或男女通用。</p>
+        </div>
+
+        <div class="shop-toolbar">
+          <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="商品分类筛选">
+            <button class="is-active" type="button" data-category="全部" role="tab" aria-selected="true">全部</button>
+            <button type="button" data-category="发型" role="tab" aria-selected="false">发型</button>
+            <button type="button" data-category="服装" role="tab" aria-selected="false">服装</button>
+            <button type="button" data-category="套装" role="tab" aria-selected="false">套装</button>
+            <button type="button" data-category="饰品" role="tab" aria-selected="false">饰品</button>
+            <button type="button" data-category="眼瞳" role="tab" aria-selected="false">眼瞳</button>
+          </div>
+          <div class="filter-tools">
+            <div class="gender-tabs" id="genderTabs" role="group" aria-label="穿戴性别筛选">
+              <button class="is-active" type="button" data-gender="全部">全部性别</button>
+              <button type="button" data-gender="女性">女性</button>
+              <button type="button" data-gender="男性">男性</button>
+              <button type="button" data-gender="通用">男女通用</button>
+            </div>
+            <label class="search-box">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10.8" cy="10.8" r="6.8"></circle>
+                <path d="m16 16 4.3 4.3"></path>
+              </svg>
+              <input id="productSearch" type="search" placeholder="搜索穿搭" aria-label="搜索商品" />
+            </label>
+            <label class="sort-box">
+              <span class="sr-only">排序方式</span>
+              <select id="sortSelect">
+                <option value="featured">推荐排序</option>
+                <option value="price-asc">价格从低到高</option>
+                <option value="price-desc">价格从高到低</option>
+                <option value="stock-desc">库存从多到少</option>
+              </select>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 7.5 5 5 5-5"></path></svg>
+            </label>
+          </div>
+        </div>
+
+        <div class="results-meta">
+          <span id="resultText">共 12 件商品</span>
+          <i></i>
+        </div>
+
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+      </section>
+
+      <section class="service-section" id="service">
+        <div class="service-intro">
+          <span class="section-kicker">DRESS WITH CONFIDENCE</span>
+          <h2>适配看得懂，<br />穿搭更放心。</h2>
+        </div>
+        <div class="service-list">
+          <article>
+            <span>01</span>
+            <div>
+              <strong>适用性别清晰</strong>
+              <p>女性、男性与男女通用商品均有明确标识。</p>
+            </div>
+          </article>
+          <article>
+            <span>02</span>
+            <div>
+              <strong>实时库存</strong>
+              <p>商品库存即时更新，售罄状态清楚可见。</p>
+            </div>
+          </article>
+          <article>
+            <span>03</span>
+            <div>
+              <strong>安全发放</strong>
+              <p>下单后按商品规则快速发放至游戏角色。</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand footer-brand" href="#home">
+        <span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>NOVA <b>LOOK</b></span>
+      </a>
+      <p>为每一种角色身份，找到恰到好处的穿搭。</p>
+      <span>© 2026 NOVA LOOK</span>
+    </footer>
+
+    <div class="drawer-mask" id="drawerMask"></div>
+    <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="购物车">
+      <div class="drawer-header">
+        <div>
+          <span>YOUR CART</span>
+          <h2>购物车 <b id="drawerCount">0</b></h2>
+        </div>
+        <button id="closeCart" type="button" aria-label="关闭购物车">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+        </button>
+      </div>
+      <div class="drawer-items" id="cartItems"></div>
+      <div class="drawer-footer" id="drawerFooter">
+        <div>
+          <span>商品合计</span>
+          <strong id="cartTotal">¥ 0</strong>
+        </div>
+        <button type="button" id="checkoutButton">去结算 <span>→</span></button>
+        <small>下单前请再次确认角色性别与穿戴适配</small>
+      </div>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <span>✓</span>
+      <p>已加入购物车</p>
+    </div>
+
+    <script src="./config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./catalog.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

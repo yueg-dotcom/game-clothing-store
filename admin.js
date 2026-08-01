@@ -6,6 +6,14 @@ const elements = {
   loginPassword: document.querySelector("#loginPassword"),
   loginButton: document.querySelector("#loginButton"),
   loginError: document.querySelector("#loginError"),
+  authTools: document.querySelector(".auth-tools"),
+  resetRequestButton: document.querySelector("#resetRequestButton"),
+  resetRequestMessage: document.querySelector("#resetRequestMessage"),
+  passwordResetForm: document.querySelector("#passwordResetForm"),
+  newPassword: document.querySelector("#newPassword"),
+  newPasswordConfirm: document.querySelector("#newPasswordConfirm"),
+  updatePasswordButton: document.querySelector("#updatePasswordButton"),
+  passwordResetMessage: document.querySelector("#passwordResetMessage"),
   logoutButton: document.querySelector("#logoutButton"),
   rows: document.querySelector("#productRows"),
   empty: document.querySelector("#emptyList"),
@@ -450,7 +458,23 @@ function showLogin(message = "") {
   elements.authGate.hidden = false;
   elements.adminMain.hidden = true;
   elements.logoutButton.hidden = true;
+  elements.loginForm.hidden = false;
+  elements.authTools.hidden = false;
+  elements.passwordResetForm.hidden = true;
   elements.loginError.textContent = message;
+  elements.passwordResetMessage.textContent = "";
+}
+
+function showPasswordReset(message = "") {
+  elements.authGate.hidden = false;
+  elements.adminMain.hidden = true;
+  elements.logoutButton.hidden = true;
+  elements.loginForm.hidden = true;
+  elements.authTools.hidden = true;
+  elements.passwordResetForm.hidden = false;
+  elements.loginError.textContent = "";
+  elements.passwordResetMessage.textContent = message;
+  window.setTimeout(() => elements.newPassword.focus(), 80);
 }
 
 async function showAdmin() {
@@ -490,6 +514,62 @@ elements.loginForm.addEventListener("submit", async (event) => {
   }
 });
 
+elements.resetRequestButton.addEventListener("click", async () => {
+  const email = elements.loginEmail.value.trim();
+  elements.resetRequestMessage.classList.remove("error");
+  elements.resetRequestMessage.textContent = "";
+  if (!email) {
+    elements.resetRequestMessage.classList.add("error");
+    elements.resetRequestMessage.textContent = "先在邮箱栏输入管理员邮箱";
+    elements.loginEmail.focus();
+    return;
+  }
+
+  elements.resetRequestButton.disabled = true;
+  elements.resetRequestButton.textContent = "正在发送…";
+  try {
+    const redirectTo = `${window.location.origin}${window.location.pathname}`;
+    await window.NovaCatalog.requestPasswordReset(email, redirectTo);
+    elements.resetRequestMessage.textContent = "重置邮件已发送，请打开邮箱里的链接设置新密码";
+  } catch (error) {
+    elements.resetRequestMessage.classList.add("error");
+    elements.resetRequestMessage.textContent = error.message || "重置邮件发送失败";
+  } finally {
+    elements.resetRequestButton.disabled = false;
+    elements.resetRequestButton.textContent = "忘记密码？发送重置邮件";
+  }
+});
+
+elements.passwordResetForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!elements.passwordResetForm.reportValidity()) return;
+  const password = elements.newPassword.value;
+  const confirmPassword = elements.newPasswordConfirm.value;
+  elements.passwordResetMessage.textContent = "";
+
+  if (password !== confirmPassword) {
+    elements.passwordResetMessage.textContent = "两次输入的新密码不一致";
+    elements.newPasswordConfirm.focus();
+    return;
+  }
+
+  elements.updatePasswordButton.disabled = true;
+  elements.updatePasswordButton.textContent = "正在更新…";
+  try {
+    await window.NovaCatalog.updatePassword(password);
+    elements.newPassword.value = "";
+    elements.newPasswordConfirm.value = "";
+    window.history.replaceState({}, document.title, window.location.pathname);
+    await window.NovaCatalog.signOut();
+    showLogin("密码已更新，请用新密码登录后台");
+  } catch (error) {
+    elements.passwordResetMessage.textContent = error.message || "密码更新失败，请重新打开重置邮件";
+  } finally {
+    elements.updatePasswordButton.disabled = false;
+    elements.updatePasswordButton.textContent = "更新密码";
+  }
+});
+
 elements.logoutButton.addEventListener("click", async () => {
   try {
     await window.NovaCatalog.signOut();
@@ -522,6 +602,11 @@ async function initializeAdmin() {
     return;
   }
 
+  if (window.NovaCatalog.isPasswordRecoveryUrl()) {
+    showPasswordReset();
+    return;
+  }
+
   try {
     const session = await window.NovaCatalog.getSession();
     if (!session) {
@@ -538,5 +623,9 @@ async function initializeAdmin() {
     showLogin(error.message || "无法连接云端，请检查网络");
   }
 }
+
+window.NovaCatalog.onAuthStateChange((event) => {
+  if (event === "PASSWORD_RECOVERY") showPasswordReset();
+});
 
 initializeAdmin();

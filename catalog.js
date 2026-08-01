@@ -200,6 +200,21 @@
     return unwrap(await client.auth.signInWithPassword({ email, password }), "登录失败");
   }
 
+  async function requestPasswordReset(email, redirectTo) {
+    if (!cloudEnabled) throw new Error("云端尚未配置");
+    unwrap(
+      await client.auth.resetPasswordForEmail(email, { redirectTo }),
+      "重置邮件发送失败",
+    );
+    return true;
+  }
+
+  async function updatePassword(password) {
+    if (!cloudEnabled) throw new Error("云端尚未配置");
+    unwrap(await client.auth.updateUser({ password }), "密码更新失败");
+    return true;
+  }
+
   async function signOut() {
     if (!cloudEnabled) return;
     unwrap(await client.auth.signOut(), "退出登录失败");
@@ -214,6 +229,17 @@
     if (!cloudEnabled) return true;
     const allowed = unwrap(await client.rpc("is_catalog_admin"), "管理员权限检查失败");
     return allowed === true;
+  }
+
+  function isPasswordRecoveryUrl() {
+    const searchParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    return searchParams.get("type") === "recovery" || hashParams.get("type") === "recovery";
+  }
+
+  function onAuthStateChange(callback) {
+    if (!cloudEnabled) return { data: { subscription: { unsubscribe() {} } } };
+    return client.auth.onAuthStateChange(callback);
   }
 
   function subscribe(callback) {
@@ -249,9 +275,13 @@
     reset,
     uploadImage,
     signIn,
+    requestPasswordReset,
+    updatePassword,
     signOut,
     getSession,
     isAdmin,
+    isPasswordRecoveryUrl,
+    onAuthStateChange,
     subscribe,
   };
 })();

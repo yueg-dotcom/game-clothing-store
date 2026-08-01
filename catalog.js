@@ -6,8 +6,11 @@
     config.supabasePublishableKey &&
     window.supabase?.createClient,
   );
+  const noStoreFetch = (input, init = {}) => fetch(input, { ...init, cache: "no-store" });
   const client = cloudEnabled
-    ? window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey)
+    ? window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey, {
+        global: { fetch: noStoreFetch },
+      })
     : null;
 
   const defaults = [

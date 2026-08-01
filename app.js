@@ -77,6 +77,7 @@ function hydrateCatalog(items) {
 }
 
 let products = [];
+let catalogRefreshTimer = null;
 
 const state = {
   category: "全部",
@@ -404,6 +405,7 @@ const sectionObserver = new IntersectionObserver(
 sections.forEach((section) => sectionObserver.observe(section));
 
 async function refreshCatalog(showError = false) {
+  window.clearTimeout(catalogRefreshTimer);
   try {
     products = hydrateCatalog(await window.NovaCatalog.load());
   } catch (error) {
@@ -422,6 +424,9 @@ async function refreshCatalog(showError = false) {
   state.cart = state.cart.filter((cartItem) => products.some((product) => product.id === cartItem.id && product.status === "online"));
   renderProducts();
   updateCart();
+  catalogRefreshTimer = window.setTimeout(() => {
+    if (!document.hidden) refreshCatalog();
+  }, 60000);
 }
 
 async function initializeCatalog() {
@@ -441,5 +446,9 @@ async function initializeCatalog() {
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) refreshCatalog();
 });
+
+window.addEventListener("pageshow", () => refreshCatalog());
+window.addEventListener("focus", () => refreshCatalog());
+window.addEventListener("online", () => refreshCatalog(true));
 
 initializeCatalog();
